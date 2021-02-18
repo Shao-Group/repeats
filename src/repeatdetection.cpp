@@ -26,7 +26,7 @@ pair<int,int> findRepeat(string s, int interval)
     for(int i = interval - 1; i < len; i++)
     {
         int cons = INF;
-        for(int j = i-2; j <= i; j++)
+        for(int j = i - interval + 1; j <= i; j++)
             cons = min(cons, f[j]);
 
         if(cons >= ans)
@@ -40,7 +40,15 @@ pair<int,int> findRepeat(string s, int interval)
     ret.first = ans;
     ret.second = pos;
 
-    if(((s[pos] == s[pos-1]) && (s[pos] == s[pos-2])))
+    int flag = 0;
+    for(int i = pos - interval + 1; i <= pos; i++)
+        if(s[i] != s[pos])
+        {
+            flag = 1;
+            break;
+        }
+
+    if(!flag)
         ret.first = -1;
 
     return ret;
